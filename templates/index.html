@@ -6,7 +6,19 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='drive.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <title>GFile Hub</title>
+    <style>
+        .multi-color-text span {
+            color: red;
+        }
 
+        .multi-color-text span:nth-child(2) {
+            color: green;
+        }
+
+        .multi-color-text span:nth-child(3) {
+            color: blue;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar">
@@ -20,8 +32,11 @@
     </div>
 
 
-    <div>
-        <h1>Google Drive!</h1>
+    <div class="multi-color-text">
+        <h1><span>Goo</span><span>gle</span> <span>Dri</span><span>ve</span></h1>
+        <h4>Get your Google drive files!</h4>
+        
+       
     </div>
 </body>
 </html>
