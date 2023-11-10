@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='drive.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>GFile Hub</title>
+
+</head>
+<body>
+    <div class="navbar">
+        <a href="/">Home</a>
+        {% if not authenticated %}
+            <a class="login-button" href="{{ url_for('login') }}">Login</a>
+        {% else %}
+            <a href="{{ url_for('google_drive_api') }}">Google Drive Files</a>
+            <a class="logout-button" href="{{ url_for('logout') }}">Logout</a>
+        {% endif %}
+    </div>
+
+
+    <div>
+        <h1>Google Drive!</h1>
+    </div>
+</body>
+</html>

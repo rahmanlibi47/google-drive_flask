@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='drive.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Google Drive Files</title>
+    <style>
+        .card-img-top {
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            height: 100px; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="/">Home</a>
+        <a class="logout-button" href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+    <div class="container text-center">
+        <h1>Your Google Drive Files</h1>
+    </div>
+
+
+    <div class="container">
+        <h3 class="mt-4">Upload a new file</h3>
+        <form method='POST' enctype='multipart/form-data' action="/upload">
+            <div class="input-group mb-3">
+                <div class="custom-file">
+                    <input type="file" name="file" class="custom-file-input" id="inputGroupFile01"
+                        aria-describedby="inputGroupFileAddon01">
+                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                </div>
+                <div class="input-group-append">
+                    <input class="input-group-text" type="submit" value="Upload" />
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <br>
+    <br>
+
+    <div class="container">
+        {% if files %}
+            <div class="row">
+                {% for file in files %}
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
+                        <div class="card">
+                            {% if file.thumbnail %}
+                                <img src="{{ file.thumbnail }}" class="card-img-top" alt=""> 
+                            {% else %}
+                                <img src="{{ url_for('static', filename='question.svg') }}" class="card-img-top" alt="">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title bold">{{ file.name }}</h5>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-danger" onclick="deleteFile('{{ file.id }}')">Delete</button>
+                                <a href="{{ file.link }}" target="_blank"><button class="btn btn-primary">View</button></a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No files in your cloud. Want to upload something?</p>
+        {% endif %}
+    </div>
+    
+
+
+    <script>
+        function deleteFile(fileId) {
+            var confirmation = confirm("Are you sure you want to delete this file?");
+            if (confirmation) {
+                window.location.href = "/delete/" + fileId;
+            }
+        }
+    </script>
+
+</body>
+
+</html>
